@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="normal/base::layout(~{::section})"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+
+<section>
+
+
+
+    <div class="card mr-3">
+
+        <div class="card-body">
+            <h1 class="text-center">Show contacts</h1>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone </th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="e:${contacts}">
+                    <th scope="row" th:text="${'SCM'+e.contactid}">1</th>
+                    <td>
+                        <img class="my-profile-picture" src="" th:src="@{'/Image/'+${e.image}}" alt="profile photo"/>
+                        <span th:text="${e.name}"></span></td>
+                    <td >
+                        <a href="#" th:href="@{'/user/contact/'+${e.contactid}}">
+                           <span th:text="${e.email}" ></span>
+                        </a>
+                    </td>
+                    <td th:text="${e.phone}"></td>
+                    <td>                                        <!-- syntax to paas dynamic value to a function of js-->
+                        <a class="btn btn-danger btn-sm btn-action" href="#" th:onclick="|deleteContact(${e.contactid})|"  >Delete</a>
+                        <a href="#" th:href="@{'/user/update/'+${e.contactid}}" class="btn btn-success btn-sm btn-action">Update</a>
+                    </td>
+
+                </tr>
+
+                </tbody>
+            </table>
+
+            <!--Pagination part-->
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li th:if="${currentpage!=0}" class="page-item"><a class="page-link" th:href="@{'/user/show-contacts/'+${currentpage-1}}"
+                                                                       href="#">Previous</a></li>
+
+                    <!--Loop for total pages bas vhi tak chlega-->
+                    <!--page 1 in form is actualy from 0 like when you fire o in browser it is 1st page
+                    here as sequence starts from 1 {#numbers.sequence(1,totalpages)-->
+                    <li th:classappend="${currentpage==i-1? 'active':''}"
+                        th:each="i:${#numbers.sequence(1,totalpages)}"
+                        class="page-item">
+                        <a class="page-link"
+                           th:href="@{'/user/show-contacts/'+${i-1}}" href="#"><span th:text="${i}"></span></a></li>
+
+
+                    <li th:if="${currentpage+1!=totalpages}" class="page-item"><a class="page-link"   th:href="@{'/user/show-contacts/'+${currentpage+1}}"
+                                                                                  href="#">Next</a></li>
+
+                </ul>
+            </nav>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+</body>
+</html>
