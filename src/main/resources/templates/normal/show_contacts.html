@@ -30,7 +30,7 @@
                 <tr th:each="e:${contacts}">
                     <th scope="row" th:text="${'SCM'+e.contactid}">1</th>
                     <td>
-                        <img class="my-profile-picture" src="" th:src="@{'/Image/'+${e.image}}" alt="profile photo"/>
+                        <img class="my-profile-picture" src="" th:src="${e.image == 'contact.png'} ? @{/Image/contact.png} : @{'/uploads/' + ${e.image}}" alt="profile photo"/>
                         <span th:text="${e.name}"></span></td>
                     <td >
                         <a href="#" th:href="@{'/user/contact/'+${e.contactid}}">
