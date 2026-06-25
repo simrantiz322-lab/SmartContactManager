@@ -100,14 +100,25 @@ public class UserController {
 
             } else {
 
-                contact.setImage(file.getOriginalFilename());
+                 String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
 
-                File savefile = new ClassPathResource("static/Image").getFile();
+                contact.setImage(fileName);
 
-                Path path = Paths.get(savefile.getAbsolutePath() + File.separator + file.getOriginalFilename());
-                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                String uploadDir = System.getProperty("user.dir") + File.separator + "uploads";
 
-                System.out.println("Image successfully uploaded");
+                File uploadFolder = new File(uploadDir);
+
+                if (!uploadFolder.exists()) {
+                    uploadFolder.mkdirs();
+                }
+
+                Path path = Paths.get(uploadDir, fileName);
+
+                Files.copy(file.getInputStream(),
+                        path,
+                        StandardCopyOption.REPLACE_EXISTING);
+
+                System.out.println("Image uploaded successfully");
             }
             contact.setUser(user);
             /*
