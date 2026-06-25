@@ -15,7 +15,7 @@
             <div class="container text-center">
 
                 <img class="my-profile-picture" style="height:200px; width:200px"
-                     src="" th:src="@{'/Image/'+${contact.image}}" alt="profile photo"/>
+                     src="" th:src="${contact.image == 'contact.png'} ? @{/Image/contact.png} : @{'/uploads/' + ${contact.image}}" alt="profile photo"/>
 
                 <h1 class="mt-3" >
                     <span th:text="${contact.name}"></span>(<span th:text="${contact.nickname}"></span>)
